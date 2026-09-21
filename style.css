@@ -116,13 +116,110 @@ body {
   }
 }
 
-/* Main Mobile-First Wrapper */
+/* Main Layout Wrapper */
 .app-container {
   width: 100%;
-  max-width: 440px; /* Perfect smartphone dimension, elegant on desktop */
+  max-width: 1100px;
   position: relative;
   z-index: 2;
   margin: auto;
+}
+
+.site-persistent-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  position: relative;
+}
+
+.center-content-wrapper {
+  width: 100%;
+  max-width: 440px;
+  flex-shrink: 0;
+  z-index: 5;
+}
+
+.center-invite-card {
+  width: 100%;
+}
+
+/* Side Photo Cards */
+.side-photo-card {
+  width: 280px;
+  flex-shrink: 0;
+  opacity: 0.95;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.side-photo-left {
+  animation: floatLeftCard 5s ease-in-out infinite alternate;
+}
+
+.side-photo-right {
+  animation: floatRightCard 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes floatLeftCard {
+  0% { transform: translateY(0px) rotate(-1.5deg); }
+  100% { transform: translateY(-8px) rotate(-0.5deg); }
+}
+
+@keyframes floatRightCard {
+  0% { transform: translateY(-6px) rotate(1.5deg); }
+  100% { transform: translateY(2px) rotate(0.5deg); }
+}
+
+.side-photo-card:hover {
+  transform: translateY(-8px) scale(1.03) !important;
+  opacity: 1;
+}
+
+.photo-glass-frame {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-glow), 0 20px 40px rgba(0, 0, 0, 0.45);
+  border-radius: var(--card-radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-img {
+  width: 100%;
+  height: 310px;
+  object-fit: cover;
+  border-radius: calc(var(--card-radius) - 8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  display: block;
+}
+
+.photo-caption {
+  margin-top: 12px;
+  color: #ffccd8;
+  letter-spacing: 0.3px;
+  text-align: center;
+  font-family: var(--font-accent);
+  font-size: 1.4rem;
+}
+
+/* On mobile screens, hide side cards or show compact */
+@media (max-width: 1079px) {
+  .site-persistent-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .side-photo-card {
+    display: none; /* Keeps mobile interface clean and focused on steps */
+  }
+
+  .center-content-wrapper {
+    max-width: 100%;
+  }
 }
 
 /* Card Steps */
@@ -646,6 +743,31 @@ body {
   font-size: 0.98rem;
   font-weight: 700;
   color: #ffffff;
+}
+
+.sent-status-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 107, 139, 0.15);
+  border: 1px solid rgba(255, 107, 139, 0.4);
+  box-shadow: 0 4px 20px rgba(255, 107, 139, 0.2);
+  border-radius: var(--chip-radius);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.sent-icon {
+  font-size: 1.8rem;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+.sent-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #fff;
+  font-weight: 500;
 }
 
 .share-actions {

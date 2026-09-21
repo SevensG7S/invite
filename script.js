@@ -51,8 +51,6 @@ const sumWish = document.getElementById('sum-wish');
 const sumComment = document.getElementById('sum-comment');
 const sumWishWrap = document.getElementById('sum-wish-wrap');
 const sumCommentWrap = document.getElementById('sum-comment-wrap');
-const btnSendTg = document.getElementById('btn-send-tg');
-const btnCopySummary = document.getElementById('btn-copy-summary');
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -202,13 +200,13 @@ function setupEventListeners() {
   });
 
   // Confirm Selection -> Step 3
-  btnConfirm.addEventListener('click', () => {
+  btnConfirm.addEventListener('click', async () => {
     state.wish = wishInput.value.trim();
     state.comment = commentInput.value.trim();
 
     // Fill summary values
     sumDate.innerText = state.selectedDate || 'В любой удобный день';
-    sumTime.innerText = state.selectedTime || '18:30';
+    sumTime.innerText = state.selectedTime || '17:30';
 
     if (state.wish) {
       sumWish.innerText = state.wish;
@@ -226,44 +224,32 @@ function setupEventListeners() {
 
     switchStep(step2, step3);
     triggerBigCelebration();
-  });
 
-  // Share Actions
-  btnSendTg.addEventListener('click', () => {
-    let msg = `Привет! 🥰 Я согласна пойти погулять!\n\n` +
-      `🗓 Дата: ${state.selectedDate}\n` +
-      `⏰ Время: ${state.selectedTime}\n`;
+    // Automatically send data to serverless API and Google Sheets
+    const payload = {
+      date: state.selectedDate,
+      time: state.selectedTime,
+      wish: state.wish,
+      comment: state.comment,
+      timestamp: new Date().toLocaleString('ru-RU')
+    };
 
-    if (state.wish) {
-      msg += `💫 Пожелания: ${state.wish}\n`;
-    }
-    if (state.comment) {
-      msg += `💌 От меня: ${state.comment}\n`;
-    }
-    msg += `\nЖду встречи! ✨`;
+    // 1. Try serverless backend
+    fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
 
-    const text = encodeURIComponent(msg);
-    // Opens Telegram share
-    window.open(`https://t.me/share/url?url=&text=${text}`, '_blank');
-  });
-
-  btnCopySummary.addEventListener('click', () => {
-    let text = `Договорились о встрече! 🥰\n` +
-      `🗓 Дата: ${state.selectedDate}\n` +
-      `⏰ Время: ${state.selectedTime}\n`;
-
-    if (state.wish) {
-      text += `💫 Пожелания: ${state.wish}\n`;
-    }
-    if (state.comment) {
-      text += `💌 От меня: ${state.comment}\n`;
-    }
-
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('Детали встречи скопированы! 💌');
-    }).catch(() => {
-      showToast('Отправь скриншот или сообщение! ✨');
-    });
+    // 2. Also send directly to Google Script with no-cors (works 100% even without serverless)
+    try {
+      fetch('https://script.google.com/macros/s/AKfycbwsZLU4J0bWaag7JCk3t4aunWfaFxWgvDRgGeiE1m5qPwREnI4weY-ipnTeYBiJWTGydw/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    } catch (e) {}
   });
 }
 

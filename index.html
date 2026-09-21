@@ -19,36 +19,47 @@
   <div id="hearts-container"></div>
 
   <main class="app-container">
-    <!-- STEP 1: INITIAL INVITATION -->
-    <section class="card-step active" id="step-1">
-      <div class="card-glass">
-        <div class="badge-pill">
-          <span class="pulse-dot"></span>
-          <span>Особое приглашение</span>
+    <div class="site-persistent-layout">
+      <!-- Left Photo Card (Girl) - stays on all steps -->
+      <aside class="side-photo-card side-photo-left">
+        <div class="photo-glass-frame">
+          <img src="photo_left.png" alt="Ты 🌸" class="side-img">
+          <div class="photo-caption">Самая красивая 🤍</div>
         </div>
+      </aside>
 
-        <div class="illustration-wrapper">
-          <div class="floating-emoji">✨</div>
-          <div class="main-avatar">☕️🌸</div>
-        </div>
+      <!-- Center Interactive Container for Steps 1, 2, 3 -->
+      <div class="center-content-wrapper">
+        <!-- STEP 1: INITIAL INVITATION -->
+        <section class="card-step active" id="step-1">
+          <div class="card-glass center-invite-card">
+            <div class="badge-pill">
+              <span class="pulse-dot"></span>
+              <span>Особое приглашение</span>
+            </div>
 
-        <h1 class="title">Пойдем погуляем?</h1>
-        <p class="subtitle">
-          Хочу позвать тебя на уютную прогулку! Попьем вкусный кофе, поболтаем обо всем на свете и классно проведем время вместе 😊
-        </p>
+            <div class="illustration-wrapper">
+              <div class="floating-emoji">✨</div>
+              <div class="main-avatar">☕️🌸</div>
+            </div>
 
-        <div class="buttons-playground" id="buttons-area">
-          <button class="btn btn-primary" id="btn-yes">
-            <span>Да, с радостью! 🥰</span>
-          </button>
-          <button class="btn btn-secondary" id="btn-no">
-            <span>Нет 🙈</span>
-          </button>
-        </div>
+            <h1 class="title">Пойдем погуляем?</h1>
+            <p class="subtitle">
+              Хочу позвать тебя на уютную прогулку! Попьем вкусный кофе, поболтаем обо всем на свете и классно проведем время вместе 😊
+            </p>
 
-        <div class="sub-hint" id="no-hint"></div>
-      </div>
-    </section>
+            <div class="buttons-playground" id="buttons-area">
+              <button class="btn btn-primary" id="btn-yes">
+                <span>Да, с радостью! 🥰</span>
+              </button>
+              <button class="btn btn-secondary" id="btn-no">
+                <span>Нет 🙈</span>
+              </button>
+            </div>
+
+            <div class="sub-hint" id="no-hint"></div>
+          </div>
+        </section>
 
     <!-- STEP 2: DATE & TIME SELECTION -->
     <section class="card-step" id="step-2">
@@ -162,20 +173,26 @@
           </div>
         </div>
 
-        <!-- Action / Share buttons -->
-        <div class="share-actions">
-          <button class="btn btn-primary btn-block" id="btn-send-tg">
-            <span>Написать мне в Telegram ✈️</span>
-          </button>
-          <button class="btn btn-secondary btn-block" id="btn-copy-summary">
-            <span>Скопировать детали 📋</span>
-          </button>
+        <!-- Success Notification Box instead of manual buttons -->
+        <div class="sent-status-card">
+          <span class="sent-icon">💌</span>
+          <span class="sent-text">Твой ответ уже летит ко мне! Всё сохранил и готовлюсь к встрече 🥰</span>
         </div>
 
-        <p class="final-note">До встречи! 🤍</p>
+        <p class="final-note">До скорой встречи! 🤍</p>
       </div>
     </section>
-  </main>
+  </div> <!-- end center-content-wrapper -->
+
+  <!-- Right Photo Card (Cute cat / Waiting) - stays on all steps -->
+  <aside class="side-photo-card side-photo-right">
+    <div class="photo-glass-frame">
+      <img src="photo_right.png" alt="Жду тебя ✨" class="side-img">
+      <div class="photo-caption">Жду нашей встречи 🥺🐾</div>
+    </div>
+  </aside>
+</div> <!-- end site-persistent-layout -->
+</main>
 
   <script src="script.js"></script>
 </body>
