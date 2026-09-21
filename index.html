@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Приглашение на прогулку ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <!-- Floating background bokeh shapes -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+  <div id="hearts-container"></div>
+
+  <main class="app-container">
+    <!-- STEP 1: INITIAL INVITATION -->
+    <section class="card-step active" id="step-1">
+      <div class="card-glass">
+        <div class="badge-pill">
+          <span class="pulse-dot"></span>
+          <span>Особое приглашение</span>
+        </div>
+
+        <div class="illustration-wrapper">
+          <div class="floating-emoji">✨</div>
+          <div class="main-avatar">☕️🌸</div>
+        </div>
+
+        <h1 class="title">Пойдем погуляем?</h1>
+        <p class="subtitle">
+          Хочу позвать тебя на уютную прогулку! Попьем вкусный кофе, поболтаем обо всем на свете и классно проведем время вместе 😊
+        </p>
+
+        <div class="buttons-playground" id="buttons-area">
+          <button class="btn btn-primary" id="btn-yes">
+            <span>Да, с радостью! 🥰</span>
+          </button>
+          <button class="btn btn-secondary" id="btn-no">
+            <span>Нет 🙈</span>
+          </button>
+        </div>
+
+        <div class="sub-hint" id="no-hint"></div>
+      </div>
+    </section>
+
+    <!-- STEP 2: DATE & TIME SELECTION -->
+    <section class="card-step" id="step-2">
+      <div class="card-glass">
+        <div class="step-header">
+          <span class="badge-pill">Шаг 2 из 2</span>
+          <h2 class="title-sm">Выбери, когда тебе удобно ✨</h2>
+          <p class="subtitle-sm">Выбери подходящий день (на ближайшие 1.5 недели) и примерное время:</p>
+        </div>
+
+        <!-- Date selector -->
+        <div class="section-block">
+          <label class="section-label">
+            <span class="icon">📅</span> Какой день?
+          </label>
+          <div class="dates-scroll-container" id="dates-container">
+            <!-- Dynamic dates will be populated by script.js -->
+          </div>
+        </div>
+
+        <!-- Time selector -->
+        <div class="section-block">
+          <label class="section-label">
+            <span class="icon">⏰</span> Во сколько встретимся?
+          </label>
+          <div class="time-chips-grid" id="time-chips">
+            <button type="button" class="chip-btn" data-time="12:00">12:00</button>
+            <button type="button" class="chip-btn" data-time="14:00">14:00</button>
+            <button type="button" class="chip-btn" data-time="15:30">15:30</button>
+            <button type="button" class="chip-btn" data-time="16:30">16:30</button>
+            <button type="button" class="chip-btn active" data-time="17:30">17:30</button>
+            <button type="button" class="chip-btn" data-time="18:00">18:00</button>
+            <button type="button" class="chip-btn custom-chip" id="custom-time-btn" style="grid-column: span 3;">Другое время ⏱</button>
+          </div>
+          <div class="custom-time-input-wrap hidden" id="custom-time-wrap">
+            <input type="time" id="custom-time-input" value="17:30" class="glass-input">
+          </div>
+        </div>
+
+        <!-- Wish / Format input -->
+        <div class="section-block">
+          <label class="section-label">
+            <span class="icon">💫</span> Что хочешь на встрече?
+          </label>
+          <div class="input-container">
+            <textarea id="wish-input" class="glass-textarea" rows="2" placeholder="Напиши, что хочешь на этой встрече, или куда хочешь пойти (можешь скипнуть) ✨"></textarea>
+          </div>
+        </div>
+
+        <!-- Sweet words / Comment input -->
+        <div class="section-block">
+          <label class="section-label">
+            <span class="icon">💌</span> Пара слов от тебя
+          </label>
+          <div class="input-container">
+            <input type="text" id="comment-input" class="glass-input text-left" placeholder="Пару красивых слов) 🌸">
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="btn-confirm">
+          <span>Договорились! Жду с нетерпением 💌</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 3: CELEBRATION & SUMMARY -->
+    <section class="card-step" id="step-3">
+      <div class="card-glass text-center">
+        <div class="celebration-badge">🎉 Ура-а-а!</div>
+        
+        <div class="illustration-wrapper celebration-avatar">
+          <div class="floating-emoji">🥳</div>
+          <div class="main-avatar">🥂✨</div>
+        </div>
+
+        <h1 class="title">Это будет чудесный вечер!</h1>
+        <p class="subtitle">
+          Я безумно рад и уже считаю минуты до нашей встречи!
+        </p>
+
+        <!-- Summary Card -->
+        <div class="summary-card">
+          <div class="summary-header">Детали нашей встречи:</div>
+          <div class="summary-item">
+            <span class="sum-icon">🗓️</span>
+            <div>
+              <span class="sum-label">Дата:</span>
+              <span class="sum-val" id="sum-date">—</span>
+            </div>
+          </div>
+          <div class="summary-item">
+            <span class="sum-icon">⏰</span>
+            <div>
+              <span class="sum-label">Время:</span>
+              <span class="sum-val" id="sum-time">—</span>
+            </div>
+          </div>
+          <div class="summary-item" id="sum-wish-wrap">
+            <span class="sum-icon">💫</span>
+            <div>
+              <span class="sum-label">Пожелания:</span>
+              <span class="sum-val" id="sum-wish">—</span>
+            </div>
+          </div>
+          <div class="summary-item" id="sum-comment-wrap">
+            <span class="sum-icon">💌</span>
+            <div>
+              <span class="sum-label">От неё:</span>
+              <span class="sum-val" id="sum-comment">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action / Share buttons -->
+        <div class="share-actions">
+          <button class="btn btn-primary btn-block" id="btn-send-tg">
+            <span>Написать мне в Telegram ✈️</span>
+          </button>
+          <button class="btn btn-secondary btn-block" id="btn-copy-summary">
+            <span>Скопировать детали 📋</span>
+          </button>
+        </div>
+
+        <p class="final-note">До встречи! 🤍</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
