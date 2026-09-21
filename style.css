@@ -206,19 +206,40 @@ body {
   font-size: 1.4rem;
 }
 
-/* On mobile screens, hide side cards or show compact */
+/* On mobile screens, stack cards beautifully */
 @media (max-width: 1079px) {
+  body {
+    padding: 12px 10px 40px;
+    align-items: flex-start;
+  }
+
   .site-persistent-layout {
     flex-direction: column;
     gap: 16px;
+    width: 100%;
   }
   
   .side-photo-card {
-    display: none; /* Keeps mobile interface clean and focused on steps */
+    display: block;
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .side-photo-left {
+    order: -1; /* Her beautiful photo is right at the top on mobile */
+  }
+
+  .side-photo-right {
+    order: 2; /* Cute kitten is underneath the steps */
+  }
+
+  .side-img {
+    height: 250px;
   }
 
   .center-content-wrapper {
     max-width: 100%;
+    width: 100%;
   }
 }
 
