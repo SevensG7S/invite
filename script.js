@@ -225,7 +225,12 @@ function setupEventListeners() {
     switchStep(step2, step3);
     triggerBigCelebration();
 
-    // Automatically send data to serverless API and Google Sheets
+    // Disable button to prevent double-clicks
+    btnConfirm.disabled = true;
+    btnConfirm.style.pointerEvents = 'none';
+    btnConfirm.style.opacity = '0.7';
+
+    // Send payload directly to Google Sheets (single reliable request)
     const payload = {
       date: state.selectedDate,
       time: state.selectedTime,
@@ -234,14 +239,6 @@ function setupEventListeners() {
       timestamp: new Date().toLocaleString('ru-RU')
     };
 
-    // 1. Try serverless backend
-    fetch('/api/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(payload)
-    }).catch(() => {});
-
-    // 2. Also send directly to Google Script with no-cors (works 100% even without serverless)
     try {
       fetch('https://script.google.com/macros/s/AKfycbwsZLU4J0bWaag7JCk3t4aunWfaFxWgvDRgGeiE1m5qPwREnI4weY-ipnTeYBiJWTGydw/exec', {
         method: 'POST',
